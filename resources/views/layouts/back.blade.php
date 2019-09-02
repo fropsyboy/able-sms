@@ -7,7 +7,7 @@
   <link rel="icon" type="image/png" href="{{ asset('back/img/favicon.png') }}">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
-    Material Dashboard by Creative Tim
+      Able Share SMS : SMS-Portal
   </title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
@@ -68,7 +68,7 @@
       </footer>
     </div>
   </div>
- 
+
 
   <script src="{{ asset('back/js/core/jquery.min.js') }}"></script>
   <script src="{{ asset('back/js/core/popper.min.js') }}"></script>
