@@ -23,17 +23,26 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('dashboard.index');
+        $data = [
+            'page' => 'Dashboard'
+        ];
+        return view('dashboard.index', $data);
     }
 
     public function user()
     {
-        return view('user.index');
+        $data = [
+            'page' => 'User'
+        ];
+        return view('user.index', $data);
     }
 
     public function messages()
     {
-        return view('user.messages');
+        $data = [
+            'page' => 'Messages'
+        ];
+        return view('user.messages', $data);
     }
 
 }
