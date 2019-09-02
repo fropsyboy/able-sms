@@ -110,7 +110,8 @@
                         </div>
                         <!-- register form grid -->
                         <div class="register-top1">
-                            <form action="#" method="get" class="register-wthree">
+                            <form action="{{ route('register') }}" method="POST" class="register-wthree">
+                            @csrf
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-md-1 d-md-flex align-items-end justify-content-end px-md-0">
@@ -122,13 +123,13 @@
                                             <label>
                                                 First name
                                             </label>
-                                            <input class="form-control" type="text" placeholder="Johnson" name="email" required="">
+                                            <input class="form-control" type="text" placeholder="Johnson" name="name" required autofocus>
                                         </div>
                                         <div class="col-md-5">
                                             <label>
                                                 Last name
                                             </label>
-                                            <input class="form-control" type="text" placeholder="Kc" name="email" required="">
+                                            <input class="form-control" type="text" placeholder="Ogenekaro" name="lname" required autofocus>
                                         </div>
                                     </div>
                                 </div>
@@ -143,7 +144,12 @@
                                             <label>
                                                 Email
                                             </label>
-                                            <input class="form-control" type="email" placeholder="example@email.com" name="email" required="">
+                                            <input class="form-control @error('email') is-invalid @enderror" type="text" placeholder="Johnson@gmail.com" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                                            @error('name')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror               
                                         </div>
                                     </div>
                                 </div>
@@ -158,7 +164,7 @@
                                             <label>
                                                 password
                                             </label>
-                                            <input type="password" class="form-control" placeholder="*******" name="Password" id="password1" required="">
+                                            <input type="password" class="form-control" placeholder="*******" name="password" id="password1" required="">
                                         </div>
                                     </div>
                                 </div>
@@ -173,7 +179,7 @@
                                             <label>
                                                 confirm password
                                             </label>
-                                            <input type="password" class="form-control" placeholder="*******" name="Password" id="password2" required="">
+                                            <input type="password" class="form-control" placeholder="*******" name="password_confirmation" id="password2" required="">
                                         </div>
                                     </div>
                                 </div>
@@ -730,14 +736,25 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="#" method="post">
+                    <form action="{{ route('login') }}" method="POST">
+                        @csrf
                         <div class="form-group">
-                            <label for="recipient-name" class="col-form-label">Username</label>
-                            <input type="text" class="form-control" placeholder=" " name="Name" id="recipient-name" required="">
+                            <label for="recipient-name" class="col-form-label">Email</label>
+                            <input type="text" class="form-control" placeholder=" " name="email" id="recipient-name" required="">
+                            @error('email')
+                                  <span class="invalid-feedback" role="alert">
+                                        <strong style="color: #761b18;">{{ $message }}</strong>
+                                    </span>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label for="password" class="col-form-label">Password</label>
-                            <input type="password" class="form-control" placeholder=" " name="Password" id="password" required="">
+                            <input type="password" class="form-control" placeholder=" " name="password" id="password" required="">
+                            @error('password')
+                                  <span class="invalid-feedback" role="alert">
+                                        <strong style="color: #761b18;">{{ $message }}</strong>
+                                    </span>
+                            @enderror
                         </div>
                         <div class="right-w3l">
                             <input type="submit" class="form-control" value="Login">
@@ -752,10 +769,10 @@
                                 <a href="#" class="text-secondary">Forgot Password?</a>
                             </div>
                         </div>
-                        <p class="text-center dont-do">Don't have an account?
-                            <a href="#register" class="scroll text-dark font-weight-bold">
+                        <!-- <p class="text-center dont-do">Don't have an account?
+                            <a href="{{ route('login') }}" class="scroll text-dark font-weight-bold">
                                 Register Now</a>
-                        </p>
+                        </p> -->
                     </form>
                 </div>
             </div>
