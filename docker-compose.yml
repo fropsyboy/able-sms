@@ -1,64 +1,25 @@
-version: '3'
-services:
+  $ docker build -t laravel-app .
+    Sending build context to Docker daemon 199.3 MB
+  Step 1 : FROM php:5.5-apache
+    ---> ff9a799b983b
+  Step 2 : RUN docker-php-ext-install pdo_mysql
+    ---> Running in 887b0da6b9f0
 
-  #PHP Service
-  app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: googlecloud.com/php
-    container_name: app
-    restart: unless-stopped
-    tty: true
-    environment:
-      SERVICE_NAME: app
-      SERVICE_TAGS: dev
-    working_dir: /var/www
-    volumes:
-      - ./:/var/www
-      - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
-    networks:
-      - app-network
+    # ...
 
-  #Nginx Service
-  webserver:
-    image: nginx:alpine
-    container_name: webserver
-    restart: unless-stopped
-    tty: true
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./:/var/www
-      - ./nginx/conf.d/:/etc/nginx/conf.d/
-    networks:
-      - app-network
+    ---> c118d49af5a5
+    Removing intermediate container 887b0da6b9f0
+  Step 3 : RUN a2enmod rewrite
+    ---> Running in 404d0edd6155
 
-  #MySQL Service
-  db:
-    image: mysql:5.7.22
-    container_name: db
-    restart: unless-stopped
-    tty: true
-    ports:
-      - "3306:3306"
-    environment:
-      MYSQL_DATABASE: laravel
-      MYSQL_ROOT_PASSWORD: your_mysql_root_password
-      SERVICE_TAGS: dev
-      SERVICE_NAME: mysql
-    volumes:
-      - dbdata:/var/lib/mysql/
-      - ./mysql/my.cnf:/etc/mysql/my.cnf
-    networks:
-      - app-network
+    # ...
 
-#Docker Networks
-networks:
-  app-network:
-    driver: bridge
-#Volumes
-volumes:
-  dbdata:
-    driver: local
+    ---> 3b310df07570
+    Removing intermediate container 404d0edd6155
+  Step 4 : ADD . /var/www
+    ---> 32a347cdecff
+    Removing intermediate container 38d0903c1043
+  Step 5 : ADD ./public /var/www/html
+    ---> 152beb432214
+    Removing intermediate container c714564b3dec
+    Successfully built 152beb432214

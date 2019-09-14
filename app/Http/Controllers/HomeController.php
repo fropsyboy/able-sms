@@ -45,4 +45,12 @@ class HomeController extends Controller
         return view('user.messages', $data);
     }
 
+    public function transactions()
+    {
+        $data = [
+            'page' => 'Transactions'
+        ];
+        return view('user.transactions', $data);
+    }
+
 }
