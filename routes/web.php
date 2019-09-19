@@ -23,3 +23,7 @@ Route::get('/user', 'HomeController@user')->name('user');
 Route::get('/messages', 'HomeController@messages')->name('messages');
 
 Route::get('/transaction', 'HomeController@transactions')->name('transaction');
+
+Route::post('/upload', 'HomeController@csvUpload')->name('csvUpload');
+
+Route::post('/send_message', 'HomeController@sendMessage')->name('send_message');

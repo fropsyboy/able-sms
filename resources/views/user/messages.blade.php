@@ -2,6 +2,16 @@
 
 @section('content')
 <div class="content">
+    @if(session()->get('message'))
+        <div class="alert alert-success">
+            {{ session()->get('message') }}
+        </div>
+    @endif
+        @if(session()->get('error'))
+            <div class="alert alert-danger">
+                {{ session()->get('error') }}
+            </div>
+        @endif
         <div class="container-fluid">
           <div class="row">
             <div class="col-md-7">
@@ -264,6 +274,16 @@
                   </div>
                 </div>
                 <div class="card-body">
+                    <form action="{{route('send_message')}}" method="post" enctype="multipart/form-data">
+                        @csrf
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Sender Name</label>
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="name" value="" required>
+                            </div>
+                        </div>
+                    </div>
                     <div class="col-md-12">
                         <div class="form-group">
                             <label>Select <b>CONTACT</b> list</label>
@@ -280,7 +300,7 @@
                             <label>Enter your SMS <b>NUMBERS</b> here</label>
                             <div class="form-group">
                                 <label class="bmd-label-floating"> 23407645535,234807763535,234807763535</label>
-                                <textarea rows="2" class="form-control" ></textarea>
+                                <textarea rows="2" class="form-control" name="numbers" required></textarea>
                             </div>
                         </div>
                     </div>
@@ -289,12 +309,13 @@
                             <label for="validationTextarea">Enter your SMS <B>MESSAGE</B> here</label>
                             <div class="form-group">
                                 <label class="bmd-label-floating"> Welcome!!! this is a placeholder, click and type your message</label>
-                                <textarea rows="5"  class="form-control is-invalid" id="validationTextarea" required></textarea>
+                                <textarea rows="5"  class="form-control is-invalid" id="validationTextarea" name="message" required></textarea>
                             </div>
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary pull-right">Message Send</button>
                     <div class="clearfix"></div>
+                    </form>
                 </div>
                 </div>
               </div>
