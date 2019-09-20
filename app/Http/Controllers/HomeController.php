@@ -33,16 +33,36 @@ class HomeController extends Controller
 
     public function user()
     {
+        $user = auth()->user();
+
         $data = [
-            'page' => 'User'
+            'page' => 'User',
+            'user' => $user
         ];
         return view('user.index', $data);
     }
 
-    public function messages()
+    public function messages($value = null)
     {
+        if (!$value) {
+            $count = 0 ;
+            $details = "";
+        }else{
+            $count = 1 ;
+            $details = Message::where('id', $value)->first();
+        }
+        $user = auth()->user();
+        $messages = Message::where('user_id', $user->id)->where('status', 'successful')->orderby('id', 'desc')->paginate(3);
+        $failed = Message::where('user_id', $user->id)->where('status', 'failed')->orderby('id', 'desc')->paginate(3);
+
+
         $data = [
-            'page' => 'Messages'
+            'page' => 'Messages',
+            'message' => $messages,
+            'failed' => $failed,
+            'count' => $count,
+            'details' => $details
+
         ];
         return view('user.messages', $data);
     }
@@ -173,6 +193,7 @@ class HomeController extends Controller
 
             $messageData = new Message;
             $messageData->user_id = $user->id;
+            $messageData->sender = $request->name;
             $messageData->message = $message;
             $messageData->credit = $manage["units_used"];
             $messageData->numbers = $serializedArr;
@@ -185,6 +206,7 @@ class HomeController extends Controller
         } catch (\Exception $e) {
             $messageData = new Message;
             $messageData->user_id = $user->id;
+            $messageData->sender = $request->name;
             $messageData->message = $request->message;
             $messageData->credit = 0;
             $messageData->numbers = $serializedArr;
@@ -196,6 +218,39 @@ class HomeController extends Controller
         }
 
         return back();
+    }
+
+    public function user_update(Request $request)
+    {
+        $user = auth()->user();
+        try {
+            User::where('id', $user->id)->update([
+                'name' => $request->name,
+                'lname' => $request->lname,
+                'city' => $request->city,
+                'state' => $request->state,
+                'about' => $request->about,
+            ]);
+            \Session::flash('message', 'Your details has been successfully saved' );
+
+        }catch (\Exception $e) {
+            \Session::flash('error', 'There was an error while saving your details, Please try again' );
+
+        }
+
+        return back();
+    }
+
+    public function adminUsers()
+    {
+        $user = auth()->user();
+        dd($user);
+
+        $data = [
+            'page' => 'User',
+            'user' => $user
+        ];
+        return view('user.index', $data);
     }
 
 }

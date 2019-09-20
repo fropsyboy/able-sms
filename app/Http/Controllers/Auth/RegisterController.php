@@ -61,14 +61,15 @@ class RegisterController extends Controller
 
     public function register(Request $request){
         $this->validator($request->all())->validate();
-        
+
         $data= User::create([
             'name' => $request['name'],
+            'lname' => $request['lname'],
             'email' => $request['email'],
             'password' => Hash::make($request['password'])
         ]);
         $data->save();
-        $data->attachRole(2);
+        $data->attachRole(1);
         return redirect()->route('login');
     }
 }
