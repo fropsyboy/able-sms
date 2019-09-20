@@ -37,22 +37,22 @@
             <ul>
               <li>
                 <a href="#">
-                  Creative Tim
+                  Home
                 </a>
               </li>
               <li>
                 <a href="#">
-                  About Us
+                  Message
                 </a>
               </li>
               <li>
                 <a href="#">
-                  Blog
+                  Support
                 </a>
               </li>
               <li>
                 <a href="#">
-                  Licenses
+                  Transactions
                 </a>
               </li>
             </ul>
@@ -62,7 +62,7 @@
             <script>
               document.write(new Date().getFullYear())
             </script>, made with <i class="material-icons">favorite</i> by
-            <a href="#" target="_blank">Creative Tim</a> for a better web.
+            <a href="http://sabidac.org.ng" target="_blank">Sabidac IT Solutions</a> for a better web.
           </div>
         </div>
       </footer>

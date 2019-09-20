@@ -1,4 +1,8 @@
-    FROM creativitykills/nginx-php-server:2.0.0
-    MAINTAINER Adebiyi Samuel <sabidacit@gmail.com>
-    COPY . /var/www/
-    RUN chmod -Rf 777 /var/www/storage/
+# Dockerfile
+FROM php:5.5-apache
+
+RUN docker-php-ext-install pdo_mysql
+RUN a2enmod rewrite
+
+ADD . /var/www
+ADD ./public /var/www/html
