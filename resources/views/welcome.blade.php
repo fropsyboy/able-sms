@@ -70,11 +70,16 @@
                             <li class="nav-item mb-lg-0 mb-3">
                                 <a class="nav-link scroll" href="#register">register</a>
                             </li>
+{{--                            <li>--}}
+{{--                                <button type="button" class="btn  ml-lg-2 w3ls-btn" data-toggle="modal" aria-pressed="false" data-target="#exampleModal">--}}
+{{--                                    Login--}}
+{{--                                </button>--}}
+{{--                            </li>--}}
                             <li>
                                 <a href="{{route('login')}}">
-                                <button type="button" class="btn  ml-lg-2 w3ls-btn" >
-                                    Login
-                                </button>
+                                    <button type="button" class="btn  ml-lg-2 w3ls-btn" >
+                                        Login
+                                    </button>
                                 </a>
                             </li>
                         </ul>
@@ -89,7 +94,7 @@
                     <div class="slider-info">
                         <h3> able-share SMS Online!</h3>
                         <p class="text-white">trusted by over 300,000 businesses worldwide</p>
-                        <a class="btn btn-theme mt-lg-5 mt-3 agile-link-bnr scroll btn-outline-secondary btn-change5" href="#register" role="button">View More</a>
+                        <a class="btn btn-theme mt-lg-5 mt-3 agile-link-bnr  btn-outline-secondary btn-change5" href="{{route('login')}}" role="button" style="width: 15em;">Enter Portal</a>
                     </div>
                 </div>
             </div>

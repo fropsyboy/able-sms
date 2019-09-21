@@ -2,6 +2,11 @@
 
 @section('content')
     <div class="content">
+        @if(session()->get('message'))
+            <div class="alert alert-success">
+                {{ session()->get('message') }}
+            </div>
+        @endif
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
@@ -11,9 +16,18 @@
                                 <div class="nav-tabs-wrapper">
                                     <span class="nav-tabs-title">System Users:</span>
                                     <ul class="nav nav-tabs" data-tabs="tabs">
+{{--                                        <li class="nav-item">--}}
+{{--                                            <a class="nav-link active" href="#profile" data-toggle="tab">--}}
+{{--                                                <i class="material-icons">done_all</i> All Users--}}
+{{--                                                <div class="ripple-container"></div>--}}
+{{--                                            </a>--}}
+{{--                                        </li>--}}
                                         <li class="nav-item">
-                                            <a class="nav-link active" href="#profile" data-toggle="tab">
-                                                <i class="material-icons">done_all</i> All Users
+                                            <a class="nav-link " href="#" data-toggle="tab">
+                                                <i class="material-icons">input</i>
+                                                <button type="button" class="btn  btn-sm btn-secondary" data-toggle="modal" aria-pressed="false" data-target="#exampleModal">
+                                                    Add Credit
+                                                </button>
                                                 <div class="ripple-container"></div>
                                             </a>
                                         </li>
@@ -79,6 +93,41 @@
                 </div>
 
                 <!-- ---other--- -->
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Top Up</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('add_credit') }}" method="POST">
+                        @csrf
+                        <div class="form-group">
+                            <label for="recipient-name" class="col-form-label">Select User</label>
+                            <select name="user" class="form-control" required>
+                                @foreach($users as $user)
+                                <option value="{{$user->id}}">{{$user->name}}  {{$user->lname}}</option>
+                                    @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="password" class="col-form-label">Add Credit</label>
+                            <input type="number" step="0.01" class="form-control" placeholder=" " name="credit"  required="">
+                        </div>
+                        <div class="right-w3l text-center">
+                            <button type="submit" class="btn  btn-success center-block" >
+                                Top Up
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
             </div>
         </div>
     </div>

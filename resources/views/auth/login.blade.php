@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
    <head>
-      <title>Bringing Energy To Life </title>
+       <title>Able Share : SMS Platform</title>
       <!-- Meta tags -->
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -62,7 +62,7 @@
                                     </span>
                                   @enderror
                               </div>
-                              
+
                               <div class="btnn">
                                  <button type="submit">LogIn</button><br>
                               </div>
@@ -77,7 +77,7 @@
                                         &nbsp;&nbsp;&nbsp;&nbsp;
                                         <a class="btn btn-link" href="{{ route('welcome') }}">
                                             <button class="btn btn-sm">{{ __('Home Page') }}</button>
-                                                
+
                                             </a>
                                     </div>
                                 </div>
@@ -101,7 +101,7 @@
       <script>
          $(document).ready(function () {
          	$('#horizontalTab').easyResponsiveTabs({
-         		type: 'default', //Types: default, vertical, accordion           
+         		type: 'default', //Types: default, vertical, accordion
          		width: 'auto', //auto or any width like 600px
          		fit: true // 100% fit in a container
          	});
