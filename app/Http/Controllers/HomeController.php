@@ -25,8 +25,12 @@ class HomeController extends Controller
 
     public function index()
     {
+        $user = auth()->user();
+        $messages = Message::where('user_id', $user->id)->orderby('id', 'desc')->take(5)->get();
         $data = [
-            'page' => 'Dashboard'
+            'page' => 'Dashboard',
+            'message' => $messages,
+            'user' => $user
         ];
         return view('dashboard.index', $data);
     }
@@ -133,6 +137,8 @@ class HomeController extends Controller
         }else{
             $pages = 6 ;
         }
+        $message = $request->message;
+        $sender = $request->name;
 
         try {
 
@@ -147,53 +153,54 @@ class HomeController extends Controller
             $client = new Client();
             $url = "https://smartsmssolutions.com/api/json.php?";
 
-            $message = $request->message;
-            $sender = $request->name;
+
             $to = $stripped;
             $token = "OdwuM3ffA3TUmInAvZu0dLhkGJTZUXeMej5EVmGf4f2wLJvKheyUeRJNKtAQthQsR4qSd8bYmBNCuc317mPZnRU8EbEeV4DRG1Bi";
 
             $query = $url.'message='.$message.'&to='.$to.'&sender='.$sender.'&type=0&routing=3&token='.$token ;
 
-//            $request = $client->post($query);
-//            $response = $request->getBody()->getContents();
-//            $manage = json_decode($response, true);
-            $manage =  [
-                      "code" => "1000",
-                      "successful" => "2347062542461",
-                      "basic_successful" => "2347062542461",
-                      "corp_successful" => "",
-                      "simserver_successful" => "",
-                      "simserver_shared" => "",
-                      "simserver_failed" => "",
-                      "simserver_distribution" => [],
-                      "failed" => "",
-                      "insufficient_unit" => "",
-                      "invalid" => "",
-                      "all_numbers" => "2347062542461",
-                      "nondnd_numbers" => "2347062542461",
-                      "dnd_numbers" => "",
-                      "units_used" => 3,
-                      "basic_units" => 3,
-                      "corp_units" => 0,
-                      "units_before" => "61.83",
-                      "units_after" => "60.83",
-                      "sms_pages" => 1,
-                      "simhost" => "",
-                      "message_id" => "msg-20190919-Bs4wF280X4C2SlHvTbC0QXlSEFaqxYbMbenIGLU",
-                      "ref_id" => null,
-                      "comment" => "Message could not be sent to 0 phone number(s) because of DND. Completed Successfully"
-                    ];
+            $request = $client->post($query);
+            $response = $request->getBody()->getContents();
+            $manage = json_decode($response, true);
+//            $manage =  [
+//                      "code" => "1000",
+//                      "successful" => "2347062542461",
+//                      "basic_successful" => "2347062542461",
+//                      "corp_successful" => "",
+//                      "simserver_successful" => "",
+//                      "simserver_shared" => "",
+//                      "simserver_failed" => "",
+//                      "simserver_distribution" => [],
+//                      "failed" => "",
+//                      "insufficient_unit" => "",
+//                      "invalid" => "",
+//                      "all_numbers" => "2347062542461",
+//                      "nondnd_numbers" => "2347062542461",
+//                      "dnd_numbers" => "",
+//                      "units_used" => 1,
+//                      "basic_units" => 1,
+//                      "corp_units" => 0,
+//                      "units_before" => "61.83",
+//                      "units_after" => "60.83",
+//                      "sms_pages" => 1,
+//                      "simhost" => "",
+//                      "message_id" => "msg-20190919-Bs4wF280X4C2SlHvTbC0QXlSEFaqxYbMbenIGLU",
+//                      "ref_id" => null,
+//                      "comment" => "Message could not be sent to 0 phone number(s) because of DND. Completed Successfully"
+//                    ];
             $unitUsed = $manage["units_used"];
             $numberSent = $manage["units_used"] / $manage["sms_pages"] ;
             $newBalance = $user->credit - $manage["units_used"] ;
+            $used = $user->used +  $manage["units_used"];
 
             User::where('id', $user->id)->update([
-                'credit' => $newBalance
+                'credit' => $newBalance,
+                'used' => $used
             ]);
 
             $messageData = new Message;
             $messageData->user_id = $user->id;
-            $messageData->sender = $request->name;
+            $messageData->sender = $sender;
             $messageData->message = $message;
             $messageData->credit = $manage["units_used"];
             $messageData->numbers = $serializedArr;
@@ -206,8 +213,8 @@ class HomeController extends Controller
         } catch (\Exception $e) {
             $messageData = new Message;
             $messageData->user_id = $user->id;
-            $messageData->sender = $request->name;
-            $messageData->message = $request->message;
+            $messageData->sender = $sender;
+            $messageData->message = $message;
             $messageData->credit = 0;
             $messageData->numbers = $serializedArr;
             $messageData->status = "failed";

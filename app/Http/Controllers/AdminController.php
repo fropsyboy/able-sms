@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Session;
+
 
 class AdminController extends Controller
 {
@@ -33,5 +35,20 @@ class AdminController extends Controller
             'user' => $users
         ];
         return view('admin.trans', $data);
+    }
+
+    public function add_credit(Request $request)
+    {
+        $user = User::where('id', $request->user)->first();
+
+        $new = $request->credit + $user->credit;
+
+        User::where('id', $user->id)->update([
+            'credit' => $new,
+        ]);
+
+        \Session::flash('message', 'Top Up Successfully Done' );
+
+        return back();
     }
 }

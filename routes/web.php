@@ -38,4 +38,7 @@ Route::group(['middleware' => ['role:admin']], function() {
 
     Route::get('/user_trans/{id}', 'AdminController@user_trans')->name('user_trans');
 
+    Route::post('/add_credit', 'AdminController@add_credit')->name('add_credit');
+
+
 });
