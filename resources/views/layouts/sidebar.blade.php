@@ -21,32 +21,33 @@
                     <p>Message</p>
                 </a>
             </li>
-          <li class="nav-item @if($page=='User') active @endif">
-            <a class="nav-link " href="{{ route('user') }}">
-              <i class="material-icons">person</i>
-              <p>User Profile</p>
-            </a>
-          </li>
-
           <li class="nav-item ">
             <a class="nav-link" href="{{route('transaction')}}">
               <i class="material-icons">library_books</i>
               <p>Transactions</p>
             </a>
           </li>
-          <li class="nav-item ">
-            <a class="nav-link" href="#">
+            <li class="nav-item @if($page=='User') active @endif">
+                <a class="nav-link " href="{{ route('user') }}">
+                    <i class="material-icons">person</i>
+                    <p>User Profile</p>
+                </a>
+            </li>
+            @role('admin')
+          <li class="nav-item @if($page=='AdminUsers') active @endif">
+            <a class="nav-link" href="{{route('adminUsers')}}">
               <i class="material-icons">bubble_chart</i>
-              <p>Support</p>
+              <p>Users</p>
             </a>
           </li>
+            @endrole
 
-          <li class="nav-item ">
-            <a class="nav-link" href="#">
-              <i class="material-icons">notifications</i>
-              <p>Notifications</p>
-            </a>
-          </li>
+{{--          <li class="nav-item ">--}}
+{{--            <a class="nav-link" href="#">--}}
+{{--              <i class="material-icons">notifications</i>--}}
+{{--              <p>Notifications</p>--}}
+{{--            </a>--}}
+{{--          </li>--}}
 
         </ul>
       </div>

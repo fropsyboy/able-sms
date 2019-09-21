@@ -71,9 +71,11 @@
                                 <a class="nav-link scroll" href="#register">register</a>
                             </li>
                             <li>
-                                <button type="button" class="btn  ml-lg-2 w3ls-btn" data-toggle="modal" aria-pressed="false" data-target="#exampleModal">
+                                <a href="{{route('login')}}">
+                                <button type="button" class="btn  ml-lg-2 w3ls-btn" >
                                     Login
                                 </button>
+                                </a>
                             </li>
                         </ul>
                     </div>
@@ -149,7 +151,7 @@
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
-                                            @enderror               
+                                            @enderror
                                         </div>
                                     </div>
                                 </div>
@@ -846,7 +848,7 @@
                 containerID: 'toTop', // fading element id
                 containerHoverID: 'toTopHover', // fading element hover id
                 scrollSpeed: 1200,
-                easingType: 'linear' 
+                easingType: 'linear'
             };
             */
 
