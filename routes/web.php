@@ -36,4 +36,6 @@ Route::group(['middleware' => ['role:admin']], function() {
 
     Route::get('/adminUsers',  'AdminController@adminUsers')->name('adminUsers');
 
+    Route::get('/user_trans/{id}', 'AdminController@user_trans')->name('user_trans');
+
 });
