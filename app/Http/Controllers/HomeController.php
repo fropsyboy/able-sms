@@ -209,7 +209,9 @@ class HomeController extends Controller
 
             $messageData->save();
 
-            \Session::flash('message', 'Your message successfully sent to '.$numberSent.' numbers and '.$unitUsed.' units was used'. 'Could not send to ' .$manage["dnd_numbers"]. 'Because of DND' );
+            \Session::flash('message', 'Your message successfully sent to '.$numberSent.' numbers and '.$unitUsed.' units was used' );
+            \Session::flash('dnd', 'DND Numbers: $manage["dnd_numbers"]' );
+
         } catch (\Exception $e) {
             $messageData = new Message;
             $messageData->user_id = $user->id;
