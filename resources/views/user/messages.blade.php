@@ -7,6 +7,11 @@
             {{ session()->get('message') }}
         </div>
     @endif
+        @if(session()->get('dnd'))
+            <div class="alert alert-info">
+                {{ session()->get('dnd') }}
+            </div>
+        @endif
         @if(session()->get('error'))
             <div class="alert alert-danger">
                 {{ session()->get('error') }}
