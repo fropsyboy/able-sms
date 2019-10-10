@@ -69,7 +69,7 @@ class RegisterController extends Controller
             'password' => Hash::make($request['password'])
         ]);
         $data->save();
-        $data->attachRole(1);
+        $data->attachRole(2);
         return redirect()->route('login');
     }
 }
