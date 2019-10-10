@@ -32,6 +32,8 @@ Route::get('/messages/{value?}', 'HomeController@messages')->name('messages');
 
 Route::post('/update', 'HomeController@user_update')->name('update');
 
+Route::post('/add_trans', 'HomeController@add_trans')->name('add_trans');
+
 Route::group(['middleware' => ['role:admin']], function() {
 
     Route::get('/adminUsers',  'AdminController@adminUsers')->name('adminUsers');
@@ -39,6 +41,5 @@ Route::group(['middleware' => ['role:admin']], function() {
     Route::get('/user_trans/{id}', 'AdminController@user_trans')->name('user_trans');
 
     Route::post('/add_credit', 'AdminController@add_credit')->name('add_credit');
-
 
 });

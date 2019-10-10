@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Transaction;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use Validator;
@@ -73,8 +74,11 @@ class HomeController extends Controller
 
     public function transactions()
     {
+        $user = auth()->user();
+        $trans = Transaction::where('user_id', $user->id)->orderby('id','desc')->paginate(10);
         $data = [
-            'page' => 'Transactions'
+            'page' => 'Transactions',
+            'trans' => $trans
         ];
         return view('user.transactions', $data);
     }
@@ -260,6 +264,31 @@ class HomeController extends Controller
             'user' => $user
         ];
         return view('user.index', $data);
+    }
+
+    public function add_trans(Request $request)
+    {
+        $user = auth()->user();
+        $amount = $request->credit * 2 ;
+        $type = $request->type;
+        if ($type == "online") {
+            dd($type);
+        }else{
+            $messageData = new Transaction;
+            $messageData->user_id = $user->id;
+            $messageData->credit = $request->credit;
+            $messageData->amount = $amount;
+            $messageData->status = "pending";
+
+            $messageData->save();
+            \Session::flash('message', 'Your Transaction  has been successfully Save. Please click on payment details to get the account details to make payment to. THANKS' );
+
+        }
+
+        $data = [
+            'page' => 'transaction'
+        ];
+        return back();
     }
 
 }
